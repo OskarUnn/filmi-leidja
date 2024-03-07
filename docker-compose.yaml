@@ -11,7 +11,7 @@ services:
     networks:
       - mongodb_network
     ports:
-      - 27017:27017
+      - "27017:27017"
     healthcheck:
       test: echo 'db.stats().ok' | mongo localhost:27017/test --quiet
       interval: 10s
@@ -34,7 +34,7 @@ services:
     networks:
       - mongodb_network
     ports:
-      - 8081:8081
+      - "8081:8081"
     healthcheck:
       test:  wget --quiet --tries=3 --spider http://admin:admin123@mongo-express:8081 || exit 1
       interval: 30s
