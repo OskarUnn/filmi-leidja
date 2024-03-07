@@ -14,11 +14,11 @@ public class Film {
     private String id;
     private String pealkiri;
     private Duration pikkus;
-    private int vanusePriirang;
+    private int vanusePiirang;
 
-    public Film(String pealkiri, Duration pikkus, int vanusePriirang) {
+    public Film(String pealkiri, Duration pikkus, int vanusePiirang) {
         this.pealkiri = pealkiri;
         this.pikkus = pikkus;
-        this.vanusePriirang = vanusePriirang;
+        this.vanusePiirang = vanusePiirang;
     }
 }
