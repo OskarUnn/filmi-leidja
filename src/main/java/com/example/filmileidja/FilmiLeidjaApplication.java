@@ -6,7 +6,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 @SpringBootApplication
 public class FilmiLeidjaApplication {
@@ -16,7 +21,7 @@ public class FilmiLeidjaApplication {
 	}
 
 	@Bean
-	CommandLineRunner runner(FilmRepository filmRepository) {
+	CommandLineRunner lisaFilmid(FilmRepository filmRepository) {
 		return args -> {
 			filmRepository.deleteAll();
 
@@ -28,6 +33,43 @@ public class FilmiLeidjaApplication {
 			filmid.add(new Film("Mahajäänud", Duration.ofMinutes(133), "Komöödia, Draama"));
 
 			filmRepository.insert(filmid);
+		};
+	}
+
+	@Bean
+	CommandLineRunner koostaKinokava(FilmRepository filmRepository, SeanssRepository seanssRepository) {
+		return args -> {
+			seanssRepository.deleteAll();
+
+			List<Film> filmid = filmRepository.findAll();
+
+			LocalTime avamisAeg = LocalTime.of(9, 0); // 09:00
+			LocalTime sulgemisAeg = LocalTime.of(21, 30); // 21:30
+
+			// Koosta ühe kuu kinokava
+			ArrayList<Seanss> kinokava = new ArrayList<>();
+			LocalDateTime kinokavaLõpp = LocalDate.now().atTime(sulgemisAeg).plusMonths(1);
+			LocalDateTime viimaseSeanssiLõpp = LocalDateTime.now();
+			Random random = new Random();
+
+			while (viimaseSeanssiLõpp.isBefore(kinokavaLõpp)) {
+
+				// liiguta seanssi algus järgmisesse päeva kui eelmine lõppes peale sulgemist
+				if (viimaseSeanssiLõpp.toLocalTime().isAfter(sulgemisAeg)) {
+					viimaseSeanssiLõpp = viimaseSeanssiLõpp.plusDays(1).with(avamisAeg);
+				}
+
+				Film suvalineFilm = filmid.get(random.nextInt(filmid.size()));
+
+				LocalDateTime seanssiAlgus = viimaseSeanssiLõpp.plusMinutes(20); // jäta >20 minutit seansside vahele
+				seanssiAlgus = seanssiAlgus.plusMinutes(5 - (seanssiAlgus.getMinute() % 5)); // ümarda seanssi algus 5 minuti vahemikku
+
+				viimaseSeanssiLõpp = seanssiAlgus.plus(suvalineFilm.getPikkus());
+
+				Seanss uusSeanss = new Seanss(suvalineFilm, seanssiAlgus);
+				kinokava.add(uusSeanss);
+			}
+			seanssRepository.insert(kinokava);
 		};
 	}
 }

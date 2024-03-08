@@ -18,6 +18,14 @@ public class Film {
     private Duration pikkus;
     private HashSet<String> žanrid;
 
+    public Film() {}
+
+    public Film(String pealkiri, Duration pikkus, HashSet<String> žanrid) {
+        this.pealkiri = pealkiri;
+        this.pikkus = pikkus;
+        this.žanrid = žanrid;
+    }
+
     public Film(String pealkiri, Duration pikkus, String žanrid) {
         this.pealkiri = pealkiri;
         this.pikkus = pikkus;
