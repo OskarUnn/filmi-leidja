@@ -15,4 +15,9 @@ public class MainController {
     public String filmid(Model model) {
         return "filmid";
     }
+
+    @GetMapping("/kinokava")
+    public String kinokava(Model model) {
+        return "kinokava";
+    }
 }

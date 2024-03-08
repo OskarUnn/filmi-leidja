@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kinokava</title>
+</head>
+<body>
+<div id="app">
+    <h1>Kinokava: </h1>
+    <ul>
+        <li style="list-style-type:none" v-for="seanss in seanssid">
+            <seanssi-kaart
+                    v-bind:seanss="seanss"
+                    v-bind:key="seanss.id">
+            </seanssi-kaart>
+        </li>
+    </ul>
+</div>
+
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script type="text/babel">
+    Vue.component('seanssi-kaart', {
+        props: ['seanss'],
+        template: `<div class="kaart">
+            <div class="kaardi-keha">
+                <h2 class="kaardi-pealkiri">
+                    {{ seanss.film.pealkiri }}
+                </h2>
+                <div class="kaardi-sisu">
+                    <p>
+                        {{ seanss.algus }}
+                    </p>
+                </div>
+            </div>
+            </div>`
+    });
+    let app = new Vue({
+        el: '#app',
+        data: {
+            seanssid: null
+        },
+        mounted() {
+            this.küsiAndmed();
+        },
+        methods: {
+            küsiAndmed() {
+                axios.get('/api/v1/kinokava')
+                    .then(response => {
+                        this.seanssid = response.data;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                    });
+            }
+        }
+    });
+</script>
+</body>
+</html>

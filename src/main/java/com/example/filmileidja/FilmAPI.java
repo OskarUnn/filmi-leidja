@@ -8,14 +8,21 @@ import java.util.List;
 @RestController
 class FilmAPI {
 
-    private final FilmRepository repository;
+    private final FilmRepository filmRepository;
+    private final SeanssRepository seanssRepository;
 
-    public FilmAPI(FilmRepository repository) {
-        this.repository = repository;
+    public FilmAPI(FilmRepository filmRepository, SeanssRepository seanssRepository) {
+        this.filmRepository = filmRepository;
+        this.seanssRepository = seanssRepository;
     }
 
     @GetMapping("/api/v1/filmid")
     List<Film> kõikFilmid() {
-        return repository.findAll();
+        return filmRepository.findAll();
+    }
+
+    @GetMapping("/api/v1/kinokava")
+    List<Seanss> koguKinokava() {
+        return seanssRepository.findAll();
     }
 }
