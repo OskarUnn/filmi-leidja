@@ -43,26 +43,29 @@ public class FilmiLeidjaApplication {
 
 			List<Film> filmid = filmRepository.findAll();
 
+			// kino päevane avamis ja sulgemis kellaaeg
 			LocalTime avamisAeg = LocalTime.of(9, 0); // 09:00
 			LocalTime sulgemisAeg = LocalTime.of(21, 30); // 21:30
 
 			// Koosta ühe kuu kinokava
 			ArrayList<Seanss> kinokava = new ArrayList<>();
 			LocalDateTime kinokavaLõpp = LocalDate.now().atTime(sulgemisAeg).plusMonths(1);
-			LocalDateTime viimaseSeanssiLõpp = LocalDateTime.now();
+			LocalDateTime viimaseSeanssiLõpp = LocalDateTime.now().with(avamisAeg).minusMinutes(20);
 			Random random = new Random();
+			LocalDateTime päevaSulgemine = viimaseSeanssiLõpp.with(sulgemisAeg);
 
 			while (viimaseSeanssiLõpp.isBefore(kinokavaLõpp)) {
 
+				LocalDateTime seanssiAlgus = viimaseSeanssiLõpp.plusMinutes(15); // jäta >15 minutit seansside vahele
+				seanssiAlgus = seanssiAlgus.plusMinutes(5 - (seanssiAlgus.getMinute() % 5)); // ümarda seanssi algus 5 minuti vahemikku
+
 				// liiguta seanssi algus järgmisesse päeva kui eelmine lõppes peale sulgemist
-				if (viimaseSeanssiLõpp.toLocalTime().isAfter(sulgemisAeg)) {
-					viimaseSeanssiLõpp = viimaseSeanssiLõpp.plusDays(1).with(avamisAeg);
+				if (seanssiAlgus.isAfter(päevaSulgemine)) {
+					päevaSulgemine = päevaSulgemine.plusDays(1);
+					seanssiAlgus = päevaSulgemine.with(avamisAeg);
 				}
 
 				Film suvalineFilm = filmid.get(random.nextInt(filmid.size()));
-
-				LocalDateTime seanssiAlgus = viimaseSeanssiLõpp.plusMinutes(20); // jäta >20 minutit seansside vahele
-				seanssiAlgus = seanssiAlgus.plusMinutes(5 - (seanssiAlgus.getMinute() % 5)); // ümarda seanssi algus 5 minuti vahemikku
 
 				viimaseSeanssiLõpp = seanssiAlgus.plus(suvalineFilm.getPikkus());
 
