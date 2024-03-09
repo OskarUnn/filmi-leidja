@@ -26,11 +26,11 @@ public class FilmiLeidjaApplication {
 			filmRepository.deleteAll();
 
 			ArrayList<Film> filmid = new ArrayList<>();
-			filmid.add(new Film("Elu ja armastus", Duration.ofMinutes(118), "Draama"));
-			filmid.add(new Film("Kung Fu Panda 4", Duration.ofMinutes(94), "Märul, Seiklus, Animatsioon"));
-			filmid.add(new Film("Düün: teine osa", Duration.ofMinutes(166), "Ulme, Seiklus"));
-			filmid.add(new Film("Pardid!", Duration.ofMinutes(92), "Komöödia, Seiklus, Animatsioon"));
-			filmid.add(new Film("Mahajäänud", Duration.ofMinutes(133), "Komöödia, Draama"));
+			filmid.add(new Film("Elu ja armastus", Duration.ofMinutes(118), "Draama", "Elu_ja_armastus.jpg"));
+			filmid.add(new Film("Kung Fu Panda 4", Duration.ofMinutes(94), "Märul, Seiklus, Animatsioon", "KungFuPanda4.jpg"));
+			filmid.add(new Film("Düün: teine osa", Duration.ofMinutes(166), "Ulme, Seiklus", "Düün2.jpg"));
+			filmid.add(new Film("Pardid!", Duration.ofMinutes(92), "Komöödia, Seiklus, Animatsioon", "Pardid.jpg"));
+			filmid.add(new Film("Mahajäänud", Duration.ofMinutes(133), "Komöödia, Draama", "Mahajäänud.jpg"));
 
 			filmRepository.insert(filmid);
 		};

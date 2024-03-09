@@ -3,18 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Kinokava</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-<div id="app">
-    <h1>Kinokava: </h1>
-    <ul>
-        <li style="list-style-type:none" v-for="seanss in seanssid">
-            <seanssi-kaart
-                    v-bind:seanss="seanss"
-                    v-bind:key="seanss.id">
-            </seanssi-kaart>
-        </li>
-    </ul>
+<div id="app" class="bg-gray flex-col">
+    <div class="flex justify-center bg-gray">
+<!--        <h1 class="font-xxl">Kinokava</h1>-->
+        <ul class="flex-col space-y-4 w-1/2 br-red-700">
+            <li class="grow justify-center" style="list-style-type:none" v-for="seanss in seanssid">
+                <seanssi-kaart
+                        v-bind:seanss="seanss"
+                        v-bind:key="seanss.id">
+                </seanssi-kaart>
+            </li>
+        </ul>
+    </div>
 </div>
 
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -24,18 +27,33 @@
 <script type="text/babel">
     Vue.component('seanssi-kaart', {
         props: ['seanss'],
-        template: `<div class="kaart">
-            <div class="kaardi-keha">
-                <h2 class="kaardi-pealkiri">
-                    {{ seanss.film.pealkiri }}
-                </h2>
-                <div class="kaardi-sisu">
-                    <p>
-                        {{ seanss.algus }}
-                    </p>
-                </div>
+        template: `
+          <div class="flex bg-gray-200 shadow-outline rounded min-w-min">
+            <div class="flex-shrink-0 h-full w-1/3">
+              <img :src="seanss.film.poster" alt="Image" class="h-full w-full object-cover rounded-l">
             </div>
-            </div>`
+            <!-- Content container -->
+            <div class="flex flex-row justify-between p-4 w-2/3">
+              <!-- h2 header -->
+              <h2 class="font-bold w-40 text-2xl">{{ seanss.film.pealkiri }}</h2>
+              <!-- Two text paragraphs -->
+              <div class="flex flex-col">
+                <p class="text-left">{{ seanss.algus }}</p>
+                <p class="text-left">{{ seanss.film.žanrid }}</p>
+              </div>
+              <!-- Button in the right bottom corner -->
+              <button v-on:click="valiSeanss()"
+                      class="self-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Vali seanss
+              </button>
+            </div>
+          </div>
+        `,
+        methods: {
+            valiSeanss() {
+                console.log("Vajutus!");
+            }
+        }
     });
     let app = new Vue({
         el: '#app',

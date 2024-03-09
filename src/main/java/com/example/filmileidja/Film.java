@@ -17,18 +17,21 @@ public class Film {
     private String pealkiri;
     private Duration pikkus;
     private HashSet<String> žanrid;
+    private String poster;
 
     public Film() {}
 
-    public Film(String pealkiri, Duration pikkus, HashSet<String> žanrid) {
+    public Film(String pealkiri, Duration pikkus, HashSet<String> žanrid, String poster) {
         this.pealkiri = pealkiri;
         this.pikkus = pikkus;
         this.žanrid = žanrid;
+        this.poster = "images/" + poster;
     }
 
-    public Film(String pealkiri, Duration pikkus, String žanrid) {
+    public Film(String pealkiri, Duration pikkus, String žanrid, String poster) {
         this.pealkiri = pealkiri;
         this.pikkus = pikkus;
         this.žanrid = new HashSet<>(List.of(žanrid.split(", ")));
+        this.poster = "images/" + poster;
     }
 }
