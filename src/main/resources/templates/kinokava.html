@@ -34,14 +34,12 @@
             </div>
             <!-- Content container -->
             <div class="flex flex-row justify-between p-4 w-2/3">
-              <!-- h2 header -->
               <h2 class="font-bold w-40 text-2xl">{{ seanss.film.pealkiri }}</h2>
-              <!-- Two text paragraphs -->
+
               <div class="flex flex-col">
                 <p class="text-left">{{ seanss.algus }}</p>
                 <p class="text-left">{{ seanss.film.žanrid }}</p>
               </div>
-              <!-- Button in the right bottom corner -->
               <button v-on:click="valiSeanss()"
                       class="self-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Vali seanss
