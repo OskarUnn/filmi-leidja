@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vali istekohad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div id="app" class="bg-gray-100 flex flex-col items-center justify-center h-screen">
+    <div class="flex flex-col justify-center">
+        <!-- <h1 class="font-xxl">Vali istekohad</h1> -->
+        <div class="flex flex-row" v-for="(row, rowIndex) in seanss.saal" :key="rowIndex">
+            <istekoht v-for="(seat, columnIndex) in row" :key="columnIndex"></istekoht>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script type="text/babel">
+    Vue.component('istekoht', {
+        props: ['iste'],
+        template: `
+            <button class="rounded shadow w-16 h-16">X</button>
+        `,
+        methods: {
+        }
+    });
+    let app = new Vue({
+        el: '#app',
+        data: {
+            seanssID: `[[${seanssID}]]`,
+            seanss: null
+        },
+        mounted() {
+            this.küsiAndmed();
+        },
+        methods: {
+            küsiAndmed() {
+                axios.get('/api/v1/seanss/'+ this.seanssID)
+                    .then(response => {
+                        this.seanss = response.data;
+                        console.log(this.seanssID)
+                        console.log(this.seanss);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                    });
+            }
+        }
+    });
+</script>
+</body>
+</html>

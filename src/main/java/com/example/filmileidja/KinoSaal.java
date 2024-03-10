@@ -2,13 +2,12 @@ package com.example.filmileidja;
 
 import lombok.Data;
 
-import java.util.Arrays;
 import java.util.Random;
 
 @Data
 public class KinoSaal {
-    private static int ridadeArv = 12;
-    private static int istmeidReas = 20;
+    private static int ridadeArv = 8;
+    private static int istmeidReas = 15;
 
     public static boolean[][] genereeriSaal() {
         boolean[][] saal = new boolean[ridadeArv][istmeidReas];
