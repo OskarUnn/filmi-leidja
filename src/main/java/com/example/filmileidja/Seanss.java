@@ -14,9 +14,11 @@ public class Seanss {
     private String id;
     private Film film;
     private LocalDateTime algus;
+    private boolean[][] saal;
 
     public Seanss(Film film, LocalDateTime algus) {
         this.film = film;
         this.algus = algus;
+        this.saal = KinoSaal.genereeriSaal();
     }
 }
