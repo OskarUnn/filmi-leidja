@@ -9,8 +9,12 @@
 <div id="app" class="bg-gray-100 flex flex-col items-center justify-center h-screen">
     <div class="flex flex-col justify-center">
         <!-- <h1 class="font-xxl">Vali istekohad</h1> -->
-        <div class="flex flex-row" v-for="(row, rowIndex) in seanss.saal" :key="rowIndex">
-            <istekoht v-for="(seat, columnIndex) in row" :key="columnIndex"></istekoht>
+        <div class="flex flex-row" v-for="(rida, ridaIndex) in seanss.saal" :key="ridaIndex">
+            <istekoht v-for="(iste, isteIndex) in rida" :key="isteIndex"
+                v-bind:rida="ridaIndex"
+                v-bind:iste="isteIndex"
+                v-bind:hõivatud="iste">
+            </istekoht>
         </div>
     </div>
 </div>
@@ -21,11 +25,19 @@
 
 <script type="text/babel">
     Vue.component('istekoht', {
-        props: ['iste'],
+        props: ['rida', 'iste', 'hõivatud', 'valitud'],
         template: `
-            <button class="rounded shadow w-16 h-16">X</button>
+            <button v-on:click="valiIste()" :class="{'bg-red-500': hõivatud, 'bg-green-500': valitud}" class="rounded shadow w-16 h-16">X</button>
         `,
+        created() {
+            this.valitud = false;
+        },
         methods: {
+            valiIste() {
+                if (!this.valitud && !this.hõivatud) {
+                    this.valitud = !this.valitud;
+                }
+            }
         }
     });
     let app = new Vue({
@@ -42,8 +54,6 @@
                 axios.get('/api/v1/seanss/'+ this.seanssID)
                     .then(response => {
                         this.seanss = response.data;
-                        console.log(this.seanssID)
-                        console.log(this.seanss);
                     })
                     .catch(error => {
                         console.error('Error fetching data:', error);
