@@ -6,7 +6,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-<div id="app" class="bg-gray-100 flex flex-col items-center justify-center h-screen">
+<div id="app" class="bg-white flex flex-col items-center justify-center h-screen">
     <div class="flex flex-col justify-center">
         <!-- <h1 class="font-xxl">Vali istekohad</h1> -->
         <div class="flex flex-row" v-for="(rida, ridaIndex) in seanss.saal" :key="ridaIndex">
@@ -16,6 +16,10 @@
                 v-bind:hõivatud="iste">
             </istekoht>
         </div>
+        <div class="mx-auto bg-gray-400 rounded w-10/12 h-2 mt-16"></div>
+        <p class="mx-auto mb-8">EKRAAN</p>
+
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded shadow p-2">Kinnita istekohad</button>
     </div>
 </div>
 
@@ -27,7 +31,7 @@
     Vue.component('istekoht', {
         props: ['rida', 'iste', 'hõivatud', 'valitud'],
         template: `
-            <button v-on:click="valiIste()" :class="{'bg-red-500': hõivatud, 'bg-green-500': valitud}" class="rounded shadow w-16 h-16">X</button>
+            <button v-on:click="valiIste()" :class="{'bg-red-500': hõivatud, 'bg-green-500': valitud}" class="bg-gray-300 rounded shadow-2xl w-10 h-10 m-1"></button>
         `,
         created() {
             this.valitud = false;
