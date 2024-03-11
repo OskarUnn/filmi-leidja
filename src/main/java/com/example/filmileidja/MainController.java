@@ -4,9 +4,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainController {
+
+    private final SeanssRepository seanssRepository;
+
+    public MainController(SeanssRepository seanssRepository) {
+        this.seanssRepository = seanssRepository;
+    }
+
     @GetMapping("/")
     public String index(Model model) {
         return "index";
@@ -23,8 +31,9 @@ public class MainController {
     }
 
     @GetMapping("/valikoht/{id}")
-    public String valikoht(Model model, @PathVariable("id") String id) {
+    public String valikoht(Model model, @PathVariable("id") String id, @RequestParam int kohti) {
         model.addAttribute("seanssID", id);
+        model.addAttribute("kohtadeArv", kohti);
         return "valikoht";
     }
 }

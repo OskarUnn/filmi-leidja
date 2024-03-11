@@ -23,6 +23,9 @@ public class FilmiLeidjaApplication {
 	@Bean
 	CommandLineRunner lisaFilmid(FilmRepository filmRepository) {
 		return args -> {
+			if (filmRepository.count() > 0)
+				return;
+
 			filmRepository.deleteAll();
 
 			ArrayList<Film> filmid = new ArrayList<>();
@@ -39,6 +42,8 @@ public class FilmiLeidjaApplication {
 	@Bean
 	CommandLineRunner koostaKinokava(FilmRepository filmRepository, SeanssRepository seanssRepository) {
 		return args -> {
+			if (seanssRepository.count() > 0)
+				return;
 			seanssRepository.deleteAll();
 
 			List<Film> filmid = filmRepository.findAll();
