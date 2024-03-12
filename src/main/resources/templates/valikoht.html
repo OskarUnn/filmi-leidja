@@ -8,10 +8,19 @@
         let seanssID = "[[${seanssID}]]";
         let kohtadeArv = [[${kohtadeArv}]];
     </script>
+    <base href="/">
 </head>
 <body>
 <div id="app" class="bg-white flex flex-col items-center justify-center h-screen">
     <div class="flex flex-col justify-center">
+        <div class="flex items-center justify-start w-full">
+            <img v-bind:src="seanss.film.poster" alt="Image" class="h-full w-1/3 object-cover rounded-l">
+            <div class="flex flex-col ml-4">
+                <p class="font-bold text-xl">{{ seanss.film.pealkiri }}</p>
+                <p class="font-bold text-lg">{{ kuupäev(seanss.algus) }}</p>
+<!--                <p class="text-lg">Istekohti valitud: {{ valitudKohad.length + "/" + kohtadeArv }}</p>-->
+            </div>
+        </div>
         <!-- <h1 class="font-xxl">Vali istekohad</h1> -->
         <div class="flex flex-row" v-for="(rida, ridaIndex) in seanss.saal" :key="ridaIndex">
             <istekoht v-for="(iste, isteIndex) in rida" :key="isteIndex"
