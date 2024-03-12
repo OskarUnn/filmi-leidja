@@ -12,13 +12,14 @@ Vue.component('seanssi-kaart', {
             </div>
             <!-- Content container -->
             <div class="flex flex-row justify-between p-4 w-2/3">
-              <h2 class="font-bold w-40 text-2xl">{{ seanss.film.pealkiri }}</h2>
-
+                <div class="flex flex-col">
+                  <h2 class="font-bold w-40 text-2xl">{{ seanss.film.pealkiri }}</h2>
+                  <p class="text-left text-xl font-semibold">{{ seanss.film.žanrid.join(", ") }}</p>
+                </div>
               <div class="flex flex-col">
-                <p class="text-left">{{ seanss.algus }}</p>
-                <p class="text-left">{{ seanss.film.žanrid }}</p>
+                <p class="text-left text-xl font-semibold">{{ kuupäev(seanss.algus) }}</p>
                 <div class="flex flex-row items-center">
-                    <p class="font-bold mr-2">Kohtade arv:</p>
+                    <p class="text-xl mr-2">Kohtade arv:</p>
                     <input type="number" min="0" v-model="valitudKohti" class="mt-2 border border-gray-400 rounded px-2 py-1 w-16">
                 </div>
               </div>
@@ -58,3 +59,9 @@ let app = new Vue({
         }
     }
 });
+
+function kuupäev(dateTimeString) { // ChatGPT abil loodud funktsioon
+    const date = new Date(dateTimeString);
+    const options = { weekday: 'short', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', timeZone: 'Europe/Tallinn' };
+    return date.toLocaleDateString('et-EE', options);
+}
