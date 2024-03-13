@@ -1,9 +1,12 @@
 package com.example.filmileidja;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.DependsOn;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -16,6 +19,8 @@ import java.util.Random;
 @SpringBootApplication
 public class FilmiLeidjaApplication {
 
+	Logger logger = LoggerFactory.getLogger(FilmiLeidjaApplication.class);
+
 	public static void main(String[] args) {
 		SpringApplication.run(FilmiLeidjaApplication.class, args);
 	}
@@ -23,10 +28,9 @@ public class FilmiLeidjaApplication {
 	@Bean
 	CommandLineRunner lisaFilmid(FilmRepository filmRepository) {
 		return args -> {
-			if (filmRepository.count() > 0)
+			if (filmRepository.count() > 0) {
 				return;
-
-			filmRepository.deleteAll();
+			}
 
 			ArrayList<Film> filmid = new ArrayList<>();
 			filmid.add(new Film("Elu ja armastus", Duration.ofMinutes(118), "Draama", "Elu_ja_armastus.jpg"));
@@ -36,15 +40,22 @@ public class FilmiLeidjaApplication {
 			filmid.add(new Film("Mahajäänud", Duration.ofMinutes(133), "Komöödia, Draama", "Mahajäänud.jpg"));
 
 			filmRepository.insert(filmid);
+
+			logger.info("Filmid lisatud andmebaasi");
 		};
 	}
 
 	@Bean
+	@DependsOn("lisaFilmid")
 	CommandLineRunner koostaKinokava(FilmRepository filmRepository, SeanssRepository seanssRepository) {
 		return args -> {
-			if (seanssRepository.count() > 0)
+			if (seanssRepository.count() > 0) {
 				return;
-			seanssRepository.deleteAll();
+			}
+			if (filmRepository.count() <= 0) {
+				logger.error("Kinokava üritati luua, aga andmebaasis pole ühtegi filmi mida näidata");
+				return;
+			}
 
 			List<Film> filmid = filmRepository.findAll();
 
@@ -78,6 +89,8 @@ public class FilmiLeidjaApplication {
 				kinokava.add(uusSeanss);
 			}
 			seanssRepository.insert(kinokava);
+
+			logger.info("Kinokava koostatud");
 		};
 	}
 }
