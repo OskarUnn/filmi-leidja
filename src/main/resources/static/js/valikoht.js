@@ -30,16 +30,32 @@ let app = new Vue({
             axios.get('/api/v1/seanss/' + seanssID)
                 .then(response => {
                     this.seanss = response.data;
+                    this.küsiParimadKohad();
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
                 });
         },
+        küsiParimadKohad() {
+            axios.get('/api/v1/parimadKohad/' + seanssID + "?kohti=" + kohtadeArv)
+                .then(response => {
+                    console.log(response.data);
+                    if (response.data !== null) {
+                        this.valiKohad(response.data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        },
+        valiKohad(kohad) {
+            for (let i = 0; i < kohad.length; i++) {
+                let istekoht = this.istekohad[kohad[i]];
+                this.valitudKohad.push(istekoht);
+                istekoht.valitud = true;
+            }
+        },
         valiUuedIstmed(rida, iste) {
-            // for (let key in this.istekohad) {
-            //     let istekoht = this.istekohad[key];
-            //     istekoht.valitud = false;
-            // }
             let istekoht = this.istekohad[rida+"-"+iste];
             if (istekoht.valitud) {
                 this.valitudKohad = this.valitudKohad.filter(item => item !== istekoht);

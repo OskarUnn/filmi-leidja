@@ -1,8 +1,6 @@
 package com.example.filmileidja;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,5 +29,15 @@ class FilmAPI {
     @GetMapping("/api/v1/seanss/{id}")
     Optional<Seanss> valitudSeanss(@PathVariable("id") String id) {
         return seanssRepository.findById(id);
+    }
+
+    @GetMapping("/api/v1/parimadKohad/{id}")
+    List<String> soovitaKohad(@PathVariable("id") String id, @RequestParam int kohti) {
+        Optional<Seanss> seanss = seanssRepository.findById(id);
+
+        if (seanss.isEmpty()) {
+            return null;
+        }
+        return seanss.get().parimadKohad(kohti);
     }
 }
