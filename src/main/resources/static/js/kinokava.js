@@ -4,11 +4,16 @@ Vue.component('seanssi-filter', {
         <div class="flex flex-col items-start mr-8">
             <h3 class="text-xl font-semibold mb-2">{{ kategooria }}</h3>
             <label v-for="valik in valikud" :key="valik" class="flex items-center">
-                <input type="checkbox" :value="valik" class="mr-2 leading-tight">
+                <input type="checkbox" :value="valik" class="mr-2 leading-tight" @change="rakendaFilter">
                 <span class="text-sm">{{ valik }}</span>
             </label>
         </div>
     `,
+    methods: {
+        rakendaFilter() {
+            console.log("AAA");
+        }
+    }
 });
 
 Vue.component('seanssi-kaart', {
@@ -23,7 +28,6 @@ Vue.component('seanssi-kaart', {
             <div class="flex-shrink-0 h-full w-1/3">
               <img :src="seanss.film.poster" alt="Image" class="h-full w-full object-cover rounded-l">
             </div>
-            <!-- Content container -->
             <div class="flex flex-row justify-between p-4 w-2/3">
                 <div class="flex flex-col">
                   <h2 class="font-bold w-40 text-2xl">{{ seanss.film.pealkiri }}</h2>
@@ -56,16 +60,31 @@ Vue.component('seanssi-kaart', {
 let app = new Vue({
     el: '#app',
     data: {
-        seanssid: null
+        seanssid: null,
+        žanrid: null,
+        otsinguKitsendus: {
+            žanrid: [],
+            algus: ""
+        }
     },
     mounted() {
         this.küsiAndmed();
+        this.küsiŽanrid();
     },
     methods: {
         küsiAndmed() {
-            axios.get('/api/v1/kinokava')
+            axios.post('/api/v1/kinokava', this.otsinguKitsendus)
                 .then(response => {
                     this.seanssid = response.data;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        },
+        küsiŽanrid() {
+            axios.get('/api/v1/žanrid')
+                .then(response => {
+                    this.žanrid = response.data;
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
