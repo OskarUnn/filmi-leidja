@@ -30,11 +30,11 @@ public class FilmiLeidjaApplication {
 				}
 
 				ArrayList<Film> filmid = new ArrayList<>();
-				filmid.add(new Film("Elu ja armastus", Duration.ofMinutes(118), "Draama", "Elu_ja_armastus.jpg"));
-				filmid.add(new Film("Kung Fu Panda 4", Duration.ofMinutes(94), "Märul, Seiklus, Animatsioon", "KungFuPanda4.jpg"));
-				filmid.add(new Film("Düün: teine osa", Duration.ofMinutes(166), "Ulme, Seiklus", "Düün2.jpg"));
-				filmid.add(new Film("Pardid!", Duration.ofMinutes(92), "Komöödia, Seiklus, Animatsioon", "Pardid.jpg"));
-				filmid.add(new Film("Mahajäänud", Duration.ofMinutes(133), "Komöödia, Draama", "Mahajäänud.jpg"));
+				filmid.add(new Film("Elu ja armastus", Duration.ofMinutes(118), "Draama", "Elu_ja_armastus.jpg", "MS-12"));
+				filmid.add(new Film("Kung Fu Panda 4", Duration.ofMinutes(94), "Märul, Seiklus, Animatsioon", "KungFuPanda4.jpg", "PERE"));
+				filmid.add(new Film("Düün: teine osa", Duration.ofMinutes(166), "Ulme, Seiklus", "Düün2.jpg", "MS-12"));
+				filmid.add(new Film("Pardid!", Duration.ofMinutes(92), "Komöödia, Seiklus, Animatsioon", "Pardid.jpg", "PERE"));
+				filmid.add(new Film("Mahajäänud", Duration.ofMinutes(133), "Komöödia, Draama", "Mahajäänud.jpg", "K-12"));
 
 				filmRepository.insert(filmid);
 				logger.info("Filmid lisatud andmebaasi");

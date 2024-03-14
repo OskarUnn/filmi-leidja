@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Data
@@ -18,11 +19,16 @@ public class Seanss {
     private Film film;
     private LocalDateTime algus;
     private boolean[][] saal;
+    private String keel;
 
     public Seanss(Film film, LocalDateTime algus) {
         this.film = film;
         this.algus = algus;
         this.saal = KinoSaal.genereeriSaal();
+
+        String[] keeled = {"eesti", "inglise", "vene"};
+        Random rand = new Random();
+        this.keel = keeled[rand.nextInt(keeled.length)];
     }
 
     public List<String> parimadKohad(int kohtadeArv) {
