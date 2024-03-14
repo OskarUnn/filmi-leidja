@@ -1,7 +1,7 @@
 Vue.component('istekoht', {
     props: ['rida', 'iste', 'hõivatud', 'valitud'],
     template: `
-            <button v-on:click="pressed()" :class="{'bg-red-500': hõivatud, 'bg-green-500': valitud}" class="bg-gray-300 rounded shadow-2xl w-10 h-10 m-1"></button>
+            <button v-on:click="pressed()" :class="{'bg-red-500': hõivatud, 'bg-green-500': valitud}" class="bg-gray-300 rounded shadow-2xl w-8 h-8 m-1"></button>
         `,
     created() {
         this.valitud = false;
