@@ -38,9 +38,9 @@ public class KinokavaService {
         LocalTime avamisAeg = LocalTime.of(9, 0); // 09:00
         LocalTime sulgemisAeg = LocalTime.of(21, 30); // 21:30
 
-        // Koosta ühe kuu kinokava
+        // Koosta ühe nädala kinokava
         ArrayList<Seanss> kinokava = new ArrayList<>();
-        LocalDateTime kinokavaLõpp = LocalDate.now().atTime(sulgemisAeg).plusMonths(1);
+        LocalDateTime kinokavaLõpp = LocalDate.now().atTime(sulgemisAeg).plusWeeks(1);
         LocalDateTime viimaseSeanssiLõpp = LocalDateTime.now().with(avamisAeg).minusMinutes(20);
         Random random = new Random();
         LocalDateTime päevaSulgemine = viimaseSeanssiLõpp.with(sulgemisAeg);

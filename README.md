@@ -24,7 +24,7 @@ veebilehitsejas leheküljel `localhost:8080/`
 
 
 ## Kinokava koostamine
-Rakenduse esmakordsel käivitusel koostatakse üheks kuuks suvaline kinokava järgmiste nõuetega:
+Rakenduse esmakordsel käivitusel koostatakse üheks nädalaks suvaline kinokava järgmiste nõuetega:
 - päeva esimene seanss algab kino avamisel (09:00)
 - seanss ei tohi alata peale kino sulgemist (21:30)
 - viimane seanss võib lõppeda peale kino sulgemist
