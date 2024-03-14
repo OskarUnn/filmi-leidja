@@ -54,6 +54,32 @@ class FilmAPI {
 
         return žanrid;
     }
+
+    @GetMapping("/api/v1/vanusepiirangud")
+    HashSet<String> vanusepiirangud() {
+        List<Film> filmid = filmRepository.findAll();
+        HashSet<String> vanusepiirangud = new HashSet<>();
+
+        for (int i = 0; i < filmid.size(); i++) {
+            Film film = filmid.get(i);
+            vanusepiirangud.add(film.getVanusePiirang());
+        }
+
+        return vanusepiirangud;
+    }
+
+    @GetMapping("/api/v1/keeled")
+    HashSet<String> keeled() {
+        List<Seanss> seanssid = seanssRepository.findAll();
+        HashSet<String> keeled = new HashSet<>();
+
+        for (int i = 0; i < seanssid.size(); i++) {
+            Seanss seanss = seanssid.get(i);
+            keeled.add(seanss.getKeel());
+        }
+
+        return keeled;
+    }
 }
 
 class OtsinguKitsendus {
