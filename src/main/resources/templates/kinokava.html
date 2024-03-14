@@ -16,6 +16,7 @@
 
             <p>Seanssi algus: {{ formatTime }}</p>
             <input type="range" min="9" max="21" v-model="app.algusAeg" @mouseup="filtreeriAlgusAeg" class="w-full">
+            <input type="date" id="seanssiKuupäev" v-model="app.seanssiKuupäev" class="mt-4">
         </div>
 
         <ul class="flex-col space-y-4 w-7/12 br-red-700">

@@ -74,14 +74,30 @@ let app = new Vue({
         seanssid: null,
         žanrid: null,
         algusAeg: 9,
+        seanssiKuupäev: null,
         otsinguKitsendus: {
             žanrid: [],
             algus: this.algusAeg,
+            kuupäev: null,
         },
     },
     mounted() {
         this.küsiAndmed();
         this.küsiŽanrid();
+
+        // ChatGPT abil loodud
+        // Get today's date
+        var today = new Date();
+
+        // Format date as YYYY-MM-DD
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+        var yyyy = today.getFullYear();
+
+        today = yyyy + '-' + mm + '-' + dd;
+
+        // Set the value of the input field to today's date
+        this.seanssiKuupäev = today;
     },
     computed: {
         filtreeritudSeanssid() {
@@ -94,6 +110,14 @@ let app = new Vue({
             const hours = this.algusAeg;
             const minutes = 0;
             return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+        },
+    },
+    watch: {
+        seanssiKuupäev(uus, vana) {
+            if (uus != vana) {
+                // this.seanssiKuupäev = uus;
+                this.seanssiKuupäevMuutus();
+            }
         },
     },
     methods: {
@@ -124,12 +148,26 @@ let app = new Vue({
         filtreeriAlgusAeg(event) {
             this.otsinguKitsendus.algus = this.algusAeg;
             this.küsiAndmed();
+            console.log(this.seanssiKuupäev);
+        },
+        seanssiKuupäevMuutus() {
+            this.otsinguKitsendus.kuupäev = this.seanssiKuupäev;
+            console.log(this.otsinguKitsendus.kuupäev);
+            console.log("UUS KUUPÄEV");
+            this.küsiAndmed();
         },
     }
 });
 
 function kuupäev(dateTimeString) { // ChatGPT abil loodud funktsioon
     const date = new Date(dateTimeString);
-    const options = { weekday: 'short', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', timeZone: 'Europe/Tallinn' };
+    const options = {
+        weekday: 'short',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        timeZone: 'Europe/Tallinn'
+    };
     return date.toLocaleDateString('et-EE', options);
 }

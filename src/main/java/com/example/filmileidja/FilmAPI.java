@@ -2,7 +2,10 @@ package com.example.filmileidja;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -60,23 +63,39 @@ class FilmAPI {
 class OtsinguKitsendus {
     private List<String> žanrid;
     private LocalTime algus;
+    private LocalDate kuupäev;
 
-    public OtsinguKitsendus(List<String> žanrid, String algus) {
+    public OtsinguKitsendus(List<String> žanrid, String algus, String kuupäev) {
         this.žanrid = žanrid;
+        if (kuupäev == null) {
+            this.kuupäev = LocalDate.now();
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            this.kuupäev = LocalDate.parse(kuupäev, formatter);
+        }
         if (algus == null) {
-            this.algus = LocalTime.of(9, 0);
+            this.algus = LocalTime.now();
         } else {
             this.algus = LocalTime.of(Integer.parseInt(algus), 0);
+            if (this.kuupäev.isEqual(LocalDate.now()) && this.algus.isBefore(LocalTime.now())) {
+                this.algus = LocalTime.now();
+            }
         }
     }
 
     public List<Seanss> sobivadSeanssid(SeanssRepository seanssRepository) {
+        LocalDateTime vahemikAlgus = kuupäev.atTime(this.algus);
+        LocalDateTime vahemikLõpp = this.kuupäev.atTime(LocalTime.MAX);
+
+        System.out.println("Vahemik:");
+        System.out.println(this.algus);
+        System.out.println(vahemikAlgus +"\t"+ vahemikLõpp);
 
         if (this.žanrid.isEmpty()) {
-            return seanssRepository.findByAlgus(this.algus);
+            return seanssRepository.findByVahemik(vahemikAlgus, vahemikLõpp);
         }
 
-        return seanssRepository.findByŽanridAndAlgus(this.žanrid, this.algus);
+        return seanssRepository.findByŽanridAndVahemik(this.žanrid, vahemikAlgus, vahemikLõpp);
     }
 
     @Override
