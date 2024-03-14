@@ -8,13 +8,17 @@
 <body>
 <div id="app" class="bg-gray flex-col">
     <div class="flex justify-center bg-gray">
-<!--        <h1 class="font-xxl">Kinokava</h1>-->
+        <seanssi-filter
+                kategooria='Žanrid'
+                v-bind:valikud="['Märul', 'Seiklus', 'Ulme']"
+        ></seanssi-filter>
+
         <ul class="flex-col space-y-4 w-7/12 br-red-700">
             <li class="grow justify-center" style="list-style-type:none" v-for="seanss in seanssid">
                 <seanssi-kaart
                         v-bind:seanss="seanss"
-                        v-bind:key="seanss.id">
-                </seanssi-kaart>
+                        v-bind:key="seanss.id"
+                ></seanssi-kaart>
             </li>
         </ul>
     </div>

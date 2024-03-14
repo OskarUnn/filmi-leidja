@@ -1,3 +1,16 @@
+Vue.component('seanssi-filter', {
+    props: ['kategooria', 'valikud'],
+    template: `
+        <div class="flex flex-col items-start mr-8">
+            <h3 class="text-xl font-semibold mb-2">{{ kategooria }}</h3>
+            <label v-for="valik in valikud" :key="valik" class="flex items-center">
+                <input type="checkbox" :value="valik" class="mr-2 leading-tight">
+                <span class="text-sm">{{ valik }}</span>
+            </label>
+        </div>
+    `,
+});
+
 Vue.component('seanssi-kaart', {
     props: ['seanss'],
     data() {
@@ -39,6 +52,7 @@ Vue.component('seanssi-kaart', {
         }
     }
 });
+
 let app = new Vue({
     el: '#app',
     data: {
