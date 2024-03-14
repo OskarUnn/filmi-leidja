@@ -2,20 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Kinokava</title>
+    <title>Kinokava - Filmi-Leidja</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-<div id="app" class="bg-gray flex-col">
+
+<nav class="bg-gray-800 p-4 fixed w-full top-0 z-10">
+    <div class="container mx-auto flex justify-between items-center">
+        <a href="/" class="text-white text-2xl font-bold">Filmi-Leidja</a>
+
+        <ul class="flex mx-auto space-x-4">
+            <li><a href="/kinokava" class="text-white hover:text-gray-300">Kinokava</a></li>
+            <li><a href="/filmid" class="text-white hover:text-gray-300">Filmid</a></li>
+            <li><a href="https://github.com/OskarUnn/filmi-leidja" class="text-gray-200 hover:text-gray-300">GitHub</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+<div id="app" class="bg-gray flex-col my-24">
+    <div class="h-3"></div>
+    <h1 class="text-4xl font-bold m-10 mt-0">Kinokava</h1>
     <div class="flex justify-center bg-gray">
-        <div class="flex-col">
+        <div class="flex-col m-5 space-x-4 text-left">
             <seanssi-filter
                     kategooria='Žanrid'
                     v-bind:valikud="žanrid"
             ></seanssi-filter>
 
-            <p>Seanssi algus: {{ formatTime }}</p>
-            <input type="range" min="9" max="21" v-model="app.algusAeg" @mouseup="filtreeriAlgusAeg" class="w-full">
+            <p class="text-xl font-semibold my-4 text-left mx-auto">Seanssi algus: {{ formatTime }}</p>
+            <input type="range" min="9" max="21" v-model="app.algusAeg" @mouseup="filtreeriAlgusAeg" class="w-full mx-5">
         </div>
 
         <ul class="flex-col space-y-4 w-7/12 br-red-700">
