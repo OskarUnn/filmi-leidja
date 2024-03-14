@@ -87,10 +87,6 @@ class OtsinguKitsendus {
         LocalDateTime vahemikAlgus = kuupäev.atTime(this.algus);
         LocalDateTime vahemikLõpp = this.kuupäev.atTime(LocalTime.MAX);
 
-        System.out.println("Vahemik:");
-        System.out.println(this.algus);
-        System.out.println(vahemikAlgus +"\t"+ vahemikLõpp);
-
         if (this.žanrid.isEmpty()) {
             return seanssRepository.findByVahemik(vahemikAlgus, vahemikLõpp);
         }

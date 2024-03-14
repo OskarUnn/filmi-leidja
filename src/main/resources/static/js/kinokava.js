@@ -77,12 +77,12 @@ let app = new Vue({
         seanssiKuupäev: null,
         otsinguKitsendus: {
             žanrid: [],
-            algus: this.algusAeg,
+            algus: 9,
             kuupäev: null,
         },
     },
     mounted() {
-        this.küsiAndmed();
+        this.küsiAndmed(true);
         this.küsiŽanrid();
 
         // ChatGPT abil loodud
@@ -115,16 +115,19 @@ let app = new Vue({
     watch: {
         seanssiKuupäev(uus, vana) {
             if (uus != vana) {
-                // this.seanssiKuupäev = uus;
                 this.seanssiKuupäevMuutus();
             }
         },
     },
     methods: {
-        küsiAndmed() {
+        küsiAndmed(esimene=false) {
             axios.post('/api/v1/kinokava', this.otsinguKitsendus)
                 .then(response => {
                     this.seanssid = response.data;
+
+                    if (esimene && this.seanssid.length == 0) {
+                        this.seanssiKuupäev = homneKP(this.seanssiKuupäev);
+                    }
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -148,12 +151,9 @@ let app = new Vue({
         filtreeriAlgusAeg(event) {
             this.otsinguKitsendus.algus = this.algusAeg;
             this.küsiAndmed();
-            console.log(this.seanssiKuupäev);
         },
         seanssiKuupäevMuutus() {
             this.otsinguKitsendus.kuupäev = this.seanssiKuupäev;
-            console.log(this.otsinguKitsendus.kuupäev);
-            console.log("UUS KUUPÄEV");
             this.küsiAndmed();
         },
     }
@@ -170,4 +170,11 @@ function kuupäev(dateTimeString) { // ChatGPT abil loodud funktsioon
         timeZone: 'Europe/Tallinn'
     };
     return date.toLocaleDateString('et-EE', options);
+}
+
+function homneKP(originalDateString) {
+    var originalDate = new Date(originalDateString);
+    originalDate.setDate(originalDate.getDate() + 1);
+    var tomorrowDateString = originalDate.toISOString().slice(0,10);
+    return tomorrowDateString;
 }
