@@ -24,8 +24,7 @@ class FilmAPI {
     }
 
     @PostMapping("/api/v1/kinokava")
-    List<Seanss> koguKinokava(@RequestBody OtsinguKitsendus kitsendus) {
-        System.out.println(kitsendus);
+    List<Seanss> soovitatudKinokava(@RequestBody OtsinguKitsendus kitsendus) {
         return kitsendus.sobivadSeanssid(seanssRepository);
     }
 
@@ -62,17 +61,22 @@ class OtsinguKitsendus {
     private List<String> žanrid;
     private LocalTime algus;
 
-    public OtsinguKitsendus(List<String> žanrid, LocalTime algus) {
+    public OtsinguKitsendus(List<String> žanrid, String algus) {
         this.žanrid = žanrid;
-        this.algus = algus;
+        if (algus == null) {
+            this.algus = LocalTime.of(9, 0);
+        } else {
+            this.algus = LocalTime.of(Integer.parseInt(algus), 0);
+        }
     }
 
     public List<Seanss> sobivadSeanssid(SeanssRepository seanssRepository) {
 
         if (this.žanrid.isEmpty()) {
-            return seanssRepository.findAll();
+            return seanssRepository.findByAlgus(this.algus);
         }
-        return seanssRepository.findByŽanrid(this.žanrid);
+
+        return seanssRepository.findByŽanridAndAlgus(this.žanrid, this.algus);
     }
 
     @Override

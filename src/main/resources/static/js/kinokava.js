@@ -73,10 +73,11 @@ let app = new Vue({
     data: {
         seanssid: null,
         žanrid: null,
+        algusAeg: 9,
         otsinguKitsendus: {
             žanrid: [],
-            algus: ""
-        }
+            algus: this.algusAeg,
+        },
     },
     mounted() {
         this.küsiAndmed();
@@ -87,8 +88,13 @@ let app = new Vue({
             if (this.seanssid === null) {
                 return null;
             }
-            return this.seanssid.slice(0, 10);
-        }
+            return this.seanssid;
+        },
+        formatTime() { // ChatGPT abil koostatud funktsioon
+            const hours = this.algusAeg;
+            const minutes = 0;
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+        },
     },
     methods: {
         küsiAndmed() {
@@ -114,7 +120,11 @@ let app = new Vue({
                 this.otsinguKitsendus.žanrid = väärtus;
             }
             this.küsiAndmed();
-        }
+        },
+        filtreeriAlgusAeg(event) {
+            this.otsinguKitsendus.algus = this.algusAeg;
+            this.küsiAndmed();
+        },
     }
 });
 
