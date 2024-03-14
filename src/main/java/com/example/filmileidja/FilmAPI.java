@@ -2,10 +2,9 @@ package com.example.filmileidja;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 class FilmAPI {
@@ -64,7 +63,7 @@ class OtsinguKitsendus {
     public OtsinguKitsendus(List<String> žanrid, String algus) {
         this.žanrid = žanrid;
         if (algus == null) {
-            this.algus = LocalTime.of(9, 0);
+            this.algus = null;
         } else {
             this.algus = LocalTime.of(Integer.parseInt(algus), 0);
         }
@@ -72,11 +71,32 @@ class OtsinguKitsendus {
 
     public List<Seanss> sobivadSeanssid(SeanssRepository seanssRepository) {
 
+        List<Seanss> seanssid;
         if (this.žanrid.isEmpty()) {
-            return seanssRepository.findByAlgus(this.algus);
+            seanssid = seanssRepository.findAll();
+        } else {
+            seanssid = seanssRepository.findByŽanrid(this.žanrid);
         }
 
-        return seanssRepository.findByŽanridAndAlgus(this.žanrid, this.algus);
+        // filtreeri välja seanssid mis on juba alanud või mis on vastuolus algusaja kitsendusega
+        Iterator<Seanss> iterator = seanssid.iterator();
+        while (iterator.hasNext()) {
+            Seanss seanss = iterator.next();
+            LocalDateTime seanssiAlgus = seanss.getAlgus();
+            if (seanssiAlgus.isBefore(LocalDateTime.now())) {
+                iterator.remove();
+            } else if (this.algus != null) {
+                if (seanssiAlgus.toLocalTime().isBefore(this.algus)) {
+                    iterator.remove();
+                }
+            }
+        }
+
+        if (this.algus != null) {
+            seanssid.sort(Comparator.comparing(seanss -> seanss.getAlgus().toLocalTime()));
+        }
+
+        return seanssid;
     }
 
     @Override
