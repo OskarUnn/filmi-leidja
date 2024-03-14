@@ -1,17 +1,28 @@
 Vue.component('seanssi-filter', {
     props: ['kategooria', 'valikud'],
+    data() {
+        return {
+            valitud: []
+        }
+    },
     template: `
         <div class="flex flex-col items-start mr-8">
             <h3 class="text-xl font-semibold mb-2">{{ kategooria }}</h3>
             <label v-for="valik in valikud" :key="valik" class="flex items-center">
-                <input type="checkbox" :value="valik" class="mr-2 leading-tight" @change="rakendaFilter">
+                <input type="checkbox" :value="valik" class="mr-2 leading-tight" @change="filterMuutus($event, valik)">
                 <span class="text-sm">{{ valik }}</span>
             </label>
         </div>
     `,
     methods: {
-        rakendaFilter() {
-            console.log("AAA");
+        filterMuutus(event, valik) {
+            if (this.valitud.includes(valik)) {
+                this.valitud = this.valitud.filter(item => item !== valik);
+            } else {
+                this.valitud.push(valik);
+            }
+
+            app.rakendaFilter(this.kategooria, this.valitud);
         }
     }
 });
@@ -71,6 +82,14 @@ let app = new Vue({
         this.küsiAndmed();
         this.küsiŽanrid();
     },
+    computed: {
+        filtreeritudSeanssid() {
+            if (this.seanssid === null) {
+                return null;
+            }
+            return this.seanssid.slice(0, 10);
+        }
+    },
     methods: {
         küsiAndmed() {
             axios.post('/api/v1/kinokava', this.otsinguKitsendus)
@@ -89,6 +108,12 @@ let app = new Vue({
                 .catch(error => {
                     console.error('Error fetching data:', error);
                 });
+        },
+        rakendaFilter(kategooria, väärtus) {
+            if (kategooria === 'Žanrid') {
+                this.otsinguKitsendus.žanrid = väärtus;
+            }
+            this.küsiAndmed();
         }
     }
 });
