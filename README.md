@@ -11,15 +11,22 @@ CGI suvepraktikale kandideerimise ülesanne
 ## Rakenduse käivitamine
 ### Vajalik tarkvara
 - Docker 🐋
+- Docker Compose plugin
+
+Soovitan kasutada [Docker Desktop-i](https://www.docker.com/products/docker-desktop/)
 
 ### Rakenduse käivitamine
 1. Klooni projekt oma masinasse käsuga:
 ```bash
 git clone https://github.com/OskarUnn/filmi-leidja.git
 ```
-2. Projekti juurkaustast, loo filmi-leidja ja mongo konteinerid käsuga:
+2. Liigu projekti kasuta
 ```bash
-docker-compose up
+cd filmi-leidja/
+```
+3. Loo filmi-leidja ja mongo konteinerid käsuga:
+```bash
+docker compose up
 ```
 Rakenduse esmakordne käivitus võtab veidike aega, sest _Docker_ peab
 vajalikud konteineri pildid allalaadima.
