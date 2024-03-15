@@ -37,4 +37,9 @@ public class MainController {
         model.addAttribute("kohtadeArv", kohti);
         return "valikoht";
     }
+
+    @GetMapping("/kohadvalitud")
+    public String kohadvalitud() {
+        return "kohadvalitud";
+    }
 }

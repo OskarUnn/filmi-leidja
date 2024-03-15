@@ -34,7 +34,7 @@
                 <p class="font-semibold text-lg">Kohtade arv: {{ kohtadeArv }}</p>
 <!--                <p class="text-lg">Istekohti valitud: {{ valitudKohad.length + "/" + kohtadeArv }}</p>-->
             </div>
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded shadow p-2 m-auto w-min">Kinnita istekohad</button>
+            <button @click="kinnitaKohad" class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded shadow p-2 m-auto w-min">Kinnita istekohad</button>
         </div>
         <!-- <h1 class="font-xxl">Vali istekohad</h1> -->
         <div class="flex flex-row" v-for="(rida, ridaIndex) in seanss.saal" :key="ridaIndex">

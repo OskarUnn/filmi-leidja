@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Istekohad valitud - Filmi-Leidja</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+
+<nav class="bg-gray-800 p-4 fixed w-full top-0 z-10">
+    <div class="container mx-auto flex justify-between items-center">
+        <a href="/" class="text-white text-2xl font-bold">Filmi-Leidja</a>
+
+        <ul class="flex mx-auto space-x-4">
+            <li><a href="/kinokava" class="text-white hover:text-gray-300">Kinokava</a></li>
+            <li><a href="/filmid" class="text-white hover:text-gray-300">Filmid</a></li>
+            <li><a href="https://github.com/OskarUnn/filmi-leidja" class="text-gray-200 hover:text-gray-300">GitHub</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+<div id="app" class="bg-gray flex flex-col justify-center items-center h-screen">
+    <h1 class="text-4xl font-bold m-10 mt-0 text-center">Teie istekohad on salvestatud!</h1>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script th:src="@{/js/kinokava.js}"></script>
+</body>
+</html>

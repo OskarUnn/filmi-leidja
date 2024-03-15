@@ -42,6 +42,34 @@ class FilmAPI {
         return seanssRepository.findById(id);
     }
 
+    @PostMapping("/api/v1/valikohad/{id}")
+    String valikohad(@RequestBody List<String> kohad, @PathVariable("id") String id) {
+        Optional<Seanss> seanssOptional = seanssRepository.findById(id);
+        System.out.println(kohad);
+        if (seanssOptional.isEmpty()) {
+            return null;
+        }
+        Seanss seanss = seanssOptional.get();
+        boolean[][] saal = seanss.getSaal();
+
+        for (String koht : kohad) {
+            int kohtRida = Integer.parseInt(koht.split("-")[0]);
+            int kohtIste = Integer.parseInt(koht.split("-")[1]);
+
+            if (!saal[kohtRida][kohtIste]) {
+                saal[kohtRida][kohtIste] = true;
+            } else {
+                // valitud koht on juba hõivatud!!!
+                return null;
+            }
+        }
+
+        seanss.setSaal(saal);
+        seanssRepository.save(seanss);
+
+        return "kohadvalitud";
+    }
+
     @GetMapping("/api/v1/parimadKohad/{id}")
     List<String> soovitaKohad(@PathVariable("id") String id, @RequestParam int kohti) {
         Optional<Seanss> seanss = seanssRepository.findById(id);

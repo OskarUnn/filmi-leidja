@@ -48,6 +48,26 @@ let app = new Vue({
                     console.error('Error fetching data:', error);
                 });
         },
+        kinnitaKohad() {
+            if (this.valitudKohad.length === kohtadeArv) {
+                var kohad = []
+
+                for (let valitudKohadKey in this.valitudKohad) {
+                    let iste = this.valitudKohad[valitudKohadKey];
+                    let koht = iste.rida + "-" + iste.iste;
+                    kohad.push(koht);
+                }
+                const data = {kohad: kohad};
+                console.log(data);
+                axios.post('/api/v1/valikohad/' + seanssID, kohad)
+                    .then(response => {
+                        window.location.href = '/' + response.data;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                    });
+            }
+        },
         valiKohad(kohad) {
             for (let i = 0; i < kohad.length; i++) {
                 let istekoht = this.istekohad[kohad[i]];
