@@ -45,7 +45,8 @@ Vue.component('seanssi-kaart', {
             <div class="flex flex-row justify-between p-4 w-2/3">
                 <div class="flex flex-col">
                     <h2 class="font-bold w-40 text-2xl">{{ seanss.film.pealkiri }}</h2>
-                    <p class="text-left text-xl font-semibold">{{ seanss.film.žanrid.join(", ") }}</p>
+                    <p class="text-left text-lg font-semibold">{{ seanss.film.žanrid.join(", ") }}</p>
+                    <p class="text-left text-lg font-semibold">Keel: {{ seanss.keel }}</p>
                 </div>
                 <div class="flex flex-col">
                     <p class="text-left text-xl font-semibold">{{ kuupäev(seanss.algus) }}</p>
