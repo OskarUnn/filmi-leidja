@@ -42,6 +42,11 @@ Booti lihtsalt veebiteenusena ja frontend oli täiesti eraldi Node.js serveri pe
 Selle projekti puhul nautisin back-endi kirjutamist kordades rohkem kui front-endi. Andmete töötlus Spring Boot-i
 ja MongoDB-ga on väga meeldiv.
 
+Tegemata jäi kasutaja vaatamis ajaloo järgi seanssi soovituste andmine. Selle lahenduseks oleksin teinud
+andmebaasi uue repositooriumi, kus hoida iga kasutaja kohta järjendit seanssidest(mitte kogu objekt vaid ID), kus
+seanssidel on ta varem käinud. Nende põhjal sorteerida kinokava (sarnaselt istme soovitus algoritmile) võttes arvesse
+žanrite kattuvust, seanssi keelt, algusaja sobivust ja ega ta seda filmi veel näinud ei ole.
+
 ## Kinokava koostamine
 Rakenduse esmakordsel käivitusel koostatakse üheks nädalaks suvaline kinokava järgmiste nõuetega:
 - päeva esimene seanss algab kino avamisel (09:00)
