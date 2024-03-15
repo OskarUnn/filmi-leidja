@@ -6,10 +6,11 @@ CGI suvepraktikale kandideerimise ülesanne
 - Spring Boot 🍃
 - MongoDB 📊
 - Vue.js 🌟
+- Tailwind CSS 💨
 
 ## Rakenduse käivitamine
 ### Vajalik tarkvara
-- Docker Engine 🐋
+- Docker 🐋
 
 ### Käivita rakendus
 ```bash
