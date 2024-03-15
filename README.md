@@ -12,7 +12,12 @@ CGI suvepraktikale kandideerimise ülesanne
 ### Vajalik tarkvara
 - Docker 🐋
 
-### Käivita rakendus
+### Rakenduse käivitamine
+1. Klooni projekt oma masinasse käsuga:
+```bash
+git clone https://github.com/OskarUnn/filmi-leidja.git
+```
+2. Projekti juurkaustast, loo filmi-leidja ja mongo konteinerid käsuga:
 ```bash
 docker-compose up
 ```
