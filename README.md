@@ -23,6 +23,19 @@ vajalikud konteineri pildid allalaadima.
 Kui _filmi-leidja_ konteiner käivitus edukalt, saab rakenduse avada
 veebilehitsejas leheküljel `localhost:8080/`
 
+## Autori kommentaar
+Projektile kulus umbes 20h kokku.
+
+Ma ei olnud varem kasutanud Spring Boot-i, seega investeerisin alguses paar tundi projekti korrektsele
+ülesseadmisele ja raamistiku õppimisele. See [õpetus](https://www.youtube.com/watch?v=ssj0CGxv60k)
+oli suureks abiks.
+
+Keeruline oli Vue front-end ja Spring Booti back-end harmooniliselt tööle saada. Selle
+kohta ei ledinud ma ka materjale (ainsad õpetused, mis ma leidsin, kasutasid Spring
+Booti lihtsalt veebiteenusena ja frontend oli täiesti eraldi Node.js serveri peal).
+
+Selle projekti puhul nautisin back-endi kirjutamist kordades rohkem kui front-endi. Andmete töötlus Spring Boot-i
+ja MongoDB-ga on väga meeldiv.
 
 ## Kinokava koostamine
 Rakenduse esmakordsel käivitusel koostatakse üheks nädalaks suvaline kinokava järgmiste nõuetega:
