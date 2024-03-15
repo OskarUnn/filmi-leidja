@@ -24,6 +24,16 @@ class FilmAPI {
 
     @PostMapping("/api/v1/kinokava")
     List<Seanss> soovitatudKinokava(@RequestBody OtsinguKitsendus kitsendus) {
+        if (kitsendus.žanrid.isEmpty()) {
+            kitsendus.žanrid = new ArrayList<>(this.žanrid());
+        }
+        if (kitsendus.keeled.isEmpty()) {
+            kitsendus.keeled = new ArrayList<>(this.keeled());
+        }
+        if (kitsendus.vanusepiirangud.isEmpty()) {
+            kitsendus.vanusepiirangud = new ArrayList<>(this.vanusepiirangud());
+        }
+
         return kitsendus.sobivadSeanssid(seanssRepository);
     }
 
@@ -62,7 +72,7 @@ class FilmAPI {
 
         for (int i = 0; i < filmid.size(); i++) {
             Film film = filmid.get(i);
-            vanusepiirangud.add(film.getVanusePiirang());
+            vanusepiirangud.add(film.getVanusepiirang());
         }
 
         return vanusepiirangud;
@@ -83,11 +93,16 @@ class FilmAPI {
 }
 
 class OtsinguKitsendus {
-    private List<String> žanrid;
+    public List<String> žanrid;
     private LocalTime algus;
+    public List<String> keeled;
+    public List<String> vanusepiirangud;
 
-    public OtsinguKitsendus(List<String> žanrid, String algus) {
+    public OtsinguKitsendus(List<String> žanrid, String algus, List<String> keeled, List<String> vanusepiirangud) {
         this.žanrid = žanrid;
+        this.keeled = keeled;
+        this.vanusepiirangud = vanusepiirangud;
+
         if (algus == null) {
             this.algus = null;
         } else {
@@ -97,12 +112,7 @@ class OtsinguKitsendus {
 
     public List<Seanss> sobivadSeanssid(SeanssRepository seanssRepository) {
 
-        List<Seanss> seanssid;
-        if (this.žanrid.isEmpty()) {
-            seanssid = seanssRepository.findAll();
-        } else {
-            seanssid = seanssRepository.findByŽanrid(this.žanrid);
-        }
+        List<Seanss> seanssid = seanssRepository.findByKitsendused(this.žanrid, this.keeled, this.vanusepiirangud);
 
         // filtreeri välja seanssid mis on juba alanud või mis on vastuolus algusaja kitsendusega
         Iterator<Seanss> iterator = seanssid.iterator();
@@ -130,6 +140,8 @@ class OtsinguKitsendus {
         return "OtsinguKitsendus{" +
                 "žanrid=" + žanrid +
                 ", algus=" + algus +
+                ", keeled=" + keeled +
+                ", vanusepiirangud=" + vanusepiirangud +
                 '}';
     }
 }

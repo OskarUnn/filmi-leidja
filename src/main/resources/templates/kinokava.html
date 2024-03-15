@@ -24,10 +24,20 @@
     <div class="h-3"></div>
     <h1 class="text-4xl font-bold m-10 mt-0">Kinokava</h1>
     <div class="flex justify-center bg-gray">
-        <div class="flex-col m-5 space-x-4 text-left">
+        <div class="flex-col m-5 space-y-4 text-left">
             <seanssi-filter
-                    kategooria='Žanrid'
-                    v-bind:valikud="žanrid"
+                kategooria='Žanrid'
+                v-bind:valikud="žanrid"
+            ></seanssi-filter>
+
+            <seanssi-filter
+                kategooria='Keel'
+                v-bind:valikud="keeled"
+            ></seanssi-filter>
+
+            <seanssi-filter
+                kategooria='Vanusepiirang'
+                v-bind:valikud="vanusepiirangud"
             ></seanssi-filter>
 
             <p class="text-xl font-semibold my-4 text-left mx-auto">Seanssi algus: {{ formatTime }}</p>

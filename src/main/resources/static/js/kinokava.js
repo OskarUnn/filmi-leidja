@@ -73,15 +73,21 @@ let app = new Vue({
     data: {
         seanssid: null,
         žanrid: null,
+        keeled: null,
+        vanusepiirangud: null,
         algusAeg: 9,
         otsinguKitsendus: {
             žanrid: [],
             algus: this.algusAeg,
+            keeled: [],
+            vanusepiirangud: [],
         },
     },
     mounted() {
         this.küsiAndmed();
         this.küsiŽanrid();
+        this.küsiKeeled();
+        this.küsiVanusepiirangud();
     },
     computed: {
         filtreeritudSeanssid() {
@@ -115,9 +121,31 @@ let app = new Vue({
                     console.error('Error fetching data:', error);
                 });
         },
+        küsiKeeled() {
+            axios.get('/api/v1/keeled')
+                .then(response => {
+                    this.keeled = response.data;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        },
+        küsiVanusepiirangud() {
+            axios.get('/api/v1/vanusepiirangud')
+                .then(response => {
+                    this.vanusepiirangud = response.data;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        },
         rakendaFilter(kategooria, väärtus) {
             if (kategooria === 'Žanrid') {
                 this.otsinguKitsendus.žanrid = väärtus;
+            } else if (kategooria === 'Keel') {
+                this.otsinguKitsendus.keeled = väärtus;
+            } else if (kategooria === 'Vanusepiirang') {
+                this.otsinguKitsendus.vanusepiirangud = väärtus;
             }
             this.küsiAndmed();
         },

@@ -19,6 +19,6 @@ public interface SeanssRepository extends MongoRepository<Seanss, String> {
 //    @Query("{'algus': {$gt: ?0}, 'algus': {$gt: ISODate(new Date().toISOString().split('T')[0] + 'T' + ?1)}, 'film.žanrid': {$in: ?2}}") // ChatGPT koostatud päring
 //    List<Seanss> findByAlgusAndŽanrid(LocalDateTime now, LocalTime specifiedTime, List<String> žanrid);
 
-    @Query("{'film.žanrid': {$in: ?0}}") // ChatGPT koostatud päring
-    List<Seanss> findByŽanrid(List<String> žanrid);
+    @Query("{'film.žanrid': {$in: ?0}, 'keel': {$in: ?1}, 'film.vanusepiirang': {$in: ?2}}") // ChatGPT koostatud päring
+    List<Seanss> findByKitsendused(List<String> žanrid, List<String> keeled, List<String> vanusepiirangud);
 }

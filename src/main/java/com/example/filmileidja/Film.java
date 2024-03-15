@@ -18,23 +18,23 @@ public class Film {
     private Duration pikkus;
     private HashSet<String> žanrid;
     private String poster;
-    private String vanusePiirang;
+    private String vanusepiirang;
 
     public Film() {}
 
-    public Film(String pealkiri, Duration pikkus, HashSet<String> žanrid, String poster, String vanusePiirang) {
+    public Film(String pealkiri, Duration pikkus, HashSet<String> žanrid, String poster, String vanusepiirang) {
         this.pealkiri = pealkiri;
         this.pikkus = pikkus;
         this.žanrid = žanrid;
         this.poster = "images/" + poster;
-        this.vanusePiirang = vanusePiirang;
+        this.vanusepiirang = vanusepiirang;
     }
 
-    public Film(String pealkiri, Duration pikkus, String žanrid, String poster, String vanusePiirang) {
+    public Film(String pealkiri, Duration pikkus, String žanrid, String poster, String vanusepiirang) {
         this.pealkiri = pealkiri;
         this.pikkus = pikkus;
         this.žanrid = new HashSet<>(List.of(žanrid.split(", ")));
         this.poster = "images/" + poster;
-        this.vanusePiirang = vanusePiirang;
+        this.vanusepiirang = vanusepiirang;
     }
 }
